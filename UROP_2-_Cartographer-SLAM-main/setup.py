@@ -16,6 +16,7 @@ setup(
             'params/rplidar_a1m8.yaml',
             'params/occupancy_grid.yaml'
         ]),
+        ('share/' + package_name + '/rviz', ['rviz/a1m8_cartographer.rviz']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
