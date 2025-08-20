@@ -17,6 +17,7 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>rviz2</exec_depend>
   <!-- launch에서 get_package_share_directory 쓰므로 필요 -->
   <exec_depend>ament_index_python</exec_depend>
 

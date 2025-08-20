@@ -3,6 +3,7 @@ import os, tempfile, yaml, textwrap
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
@@ -129,6 +130,20 @@ def _launch_setup(context, *args, **kwargs):
         arguments=['-resolution', res, '-publish_period_sec', pub],
         output='screen'
     ))
+    # RViz2 visualization (optional)
+    rviz_cfg = os.path.join(
+        get_package_share_directory('a1m8_cartographer'),
+        'rviz',
+        'a1m8_cartographer.rviz')
+    nodes.append(Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', rviz_cfg],
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('rviz')),
+    ))
+
 
     return nodes
 
@@ -142,6 +157,7 @@ def generate_launch_description():
         DeclareLaunchArgument('grid_yaml', default_value=grid_default),
         DeclareLaunchArgument('base_frame', default_value='base_link'),
         DeclareLaunchArgument('laser_frame', default_value='laser'),
+        DeclareLaunchArgument('rviz', default_value='true'),
         OpaqueFunction(function=_launch_setup)
     ])
 
